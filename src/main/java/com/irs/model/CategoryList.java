@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -11,10 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.Table;
 
 import com.irs.model.type.Active;
-
+@Entity
+@Table(name = "SUB_MENU")
 public class CategoryList  implements Serializable{
 	
 		/**
@@ -24,45 +26,57 @@ public class CategoryList  implements Serializable{
 
 		@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private int subMenuID;
+		@Column(name = "SUB_MENU_ID")
+	    private int id;
 	    
 
-	    @MapsId
+	 //   @MapsId
 	    @ManyToOne(cascade = CascadeType.ALL)
-	    @JoinColumn(name = "menuID", referencedColumnName = "menuID")
-	    private Menu menuID;
+	    @JoinColumn(name = "FK_MENU_ID", referencedColumnName = "MENU_ID")
+	    private Menu menuId;
 	    
-	    @Column(length = 255, unique = true)
-	    private String name;
+	    @Column(name="SUB_MENU_NAME", length = 255, unique = true)
+	    private String subMenuName;
 	    
-	    @Column(length = 1000)
+	    @Column(name = "IMAGE", length = 1000)
 	    private String image;
 	    
-	    @Enumerated(EnumType.STRING)
-	    private Active active;
+		@Enumerated(EnumType.ORDINAL)
+		@Column(name = "ACTIVE", nullable = false)
+		private Active active;
+
+		@Column(name = "NOTIFICATION")
+		private short notification;
 	    
-	    public int getSubMenuID() {
-			return subMenuID;
+		/**
+		 * Get id
+		 * 
+		 * @return id
+		 **/
+		public int getId() {
+			return id;
+		}
+		/**
+		 * @param id new value of {@link getId}
+		 **/
+		public void setId(int id) {
+			this.id = id;
 		}
 
-		public void setSubMenuID(int subMenuID) {
-			this.subMenuID = subMenuID;
+		public Menu getMenuId() {
+			return menuId;
 		}
 
-		public Menu getMenuID() {
-			return menuID;
+		public void setMenuId(Menu menuId) {
+			this.menuId = menuId;
 		}
 
-		public void setMenuID(Menu menuID) {
-			this.menuID = menuID;
+		public String getSubMenuName() {
+			return subMenuName;
 		}
 
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
+		public void setSubMenuName(String subMenuName) {
+			this.subMenuName = subMenuName;
 		}
 
 		public String getImage() {
@@ -79,6 +93,14 @@ public class CategoryList  implements Serializable{
 
 		public void setActive(Active active) {
 			this.active = active;
+		}
+
+		public short getNotification() {
+			return notification;
+		}
+
+		public void setNotification(short notification) {
+			this.notification = notification;
 		}
 
 		
