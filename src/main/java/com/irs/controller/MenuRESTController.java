@@ -36,7 +36,7 @@ public class MenuRESTController {
 	@Autowired
 	private MenuService menuService;
 
-	@GetMapping("/menus")
+	@GetMapping(value ="/menus",produces = "application/json")
 	public ResponseEntity<List<Menu>> getAllMenuItems() throws ApiException {
 		LOG.info("MenuRESTController : getAllMenuItems - Start");
 		try {
@@ -50,6 +50,7 @@ public class MenuRESTController {
 	@GetMapping(value = "/menus/{id}", produces = "application/json")
 	@ApiOperation(value = "getMenuById", notes = "Returns menu from Menu")
 	@ApiResponses({ @ApiResponse(code = 200, message = "OK", response = Menu.class),
+			@ApiResponse(code = 204, message = "NO CONTENT"),
 			@ApiResponse(code = 500, message = "Internal error server") })
 	public ResponseEntity<Menu> getMenuById(@PathVariable(value = "id") int menuId) throws ApiException {
 		LOG.info("MenuRESTController : getMenuById - Start");
@@ -64,5 +65,25 @@ public class MenuRESTController {
 			throw new ApiException("Exception in MenuRESTController : getMenuById", e);
 		}
 	}
+	
+	@GetMapping(value = "/menus/name/{name}", produces = "application/json")
+	@ApiOperation(value = "getMenuById", notes = "Returns menu from Menu")
+	@ApiResponses({ @ApiResponse(code = 200, message = "OK", response = Menu.class),
+			@ApiResponse(code = 204, message = "NO CONTENT"),
+			@ApiResponse(code = 500, message = "Internal error server") })
+	public ResponseEntity<Menu> getMenuByName(@PathVariable(value = "name") String name) throws ApiException {
+		LOG.info("MenuRESTController : getMenuByName - Start");
+		try {
+			Menu menu = menuService.findByName(name);
+			if (menu != null) {
+				return ResponseEntity.ok().body(menu);
+			} else {
+				return ResponseEntity.noContent().build();
+			}
+		} catch (Exception e) {
+			throw new ApiException("Exception in MenuRESTController : getMenuByName", e);
+		}
+	}
+	
 
 }
