@@ -29,8 +29,6 @@ public class CategoryList  implements Serializable{
 		@Column(name = "SUB_MENU_ID")
 	    private int id;
 	    
-
-	 //   @MapsId
 	    @ManyToOne(cascade = CascadeType.ALL)
 	    @JoinColumn(name = "FK_MENU_ID", referencedColumnName = "MENU_ID")
 	    private Menu menuId;
@@ -63,42 +61,77 @@ public class CategoryList  implements Serializable{
 			this.id = id;
 		}
 
+		/**
+		 * Get menuId
+		 * 
+		 * @return menuId
+		 **/
 		public Menu getMenuId() {
 			return menuId;
 		}
-
+		/**
+		 * @param menuId new value of {@link getMenuId}
+		 **/
 		public void setMenuId(Menu menuId) {
 			this.menuId = menuId;
 		}
 
+		/**
+		 * Get subMenuName
+		 * 
+		 * @return subMenuName
+		 **/
 		public String getSubMenuName() {
 			return subMenuName;
 		}
 
+		/**
+		 * @param subMenuName new value of {@link subMenuName}
+		 **/
 		public void setSubMenuName(String subMenuName) {
 			this.subMenuName = subMenuName;
 		}
-
-		public String getImage() {
-			return image;
-		}
-
-		public void setImage(String image) {
-			this.image = image;
-		}
-
+		/**
+		 * Get active
+		 * 
+		 * @return active
+		 **/
 		public Active getActive() {
 			return active;
 		}
-
+		/**
+		 * @param active new value of {@link getActive}
+		 **/
 		public void setActive(Active active) {
 			this.active = active;
 		}
 
+		/**
+		 * Get image
+		 * 
+		 * @return image
+		 **/
+		public String getImage() {
+			return image;
+		}
+		/**
+		 * @param image new value of {@link getImage}
+		 **/
+		public void setImage(String image) {
+			this.image = image;
+		}
+
+		/**
+		 * Get notification
+		 * 
+		 * @return notification
+		 **/
 		public short getNotification() {
 			return notification;
 		}
-
+		/**
+		 * @param notification new value of {@link getNotification}
+		 **/
 		public void setNotification(short notification) {
 			this.notification = notification;
 		}
