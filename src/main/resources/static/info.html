@@ -1,0 +1,191 @@
+<html>
+
+<head>
+  <title>Interactive Screens - Info</title>
+  <link rel="stylesheet" href="css/main.css"></head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+<div class="sidenav">
+  <a id="nav0" href="menu.html" class="sidenav-current">About</a>
+  <a id="nav1" href="menu.html" class="sidenav-other">Services</a>
+  <a id="nav2" href="menu.html" class="sidenav-other">Clients</a>
+  <a id="nav3" href="menu.html" class="sidenav-other">Contact</a>
+</div>
+
+<div class="main">
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	<p>Lobortis feugiat vivamus at augue eget arcu. Nam aliquam sem et tortor consequat id porta nibh. Proin gravida hendrerit lectus a. Elementum nisi quis eleifend quam adipiscing vitae. Risus nullam eget felis eget nunc lobortis mattis.</p>
+	<ul id="rig">
+		<li id="middle0" style="width: 100px; float:left; height:100px; background:gray; margin:10px;"></li>
+		<li id="middle1" style="width: 100px; float:left; height:100px; background:yellow; margin:10px"></li>
+		<li id="middle2" style="width: 100px; float:left; height:100px; background:red; margin:10px"></li>
+	</ul>
+</div>
+<div style="display: none">
+	<div id="current">0</div>
+	<div id="leftcurrent">0</div>
+	<div id="rightcurrent">0</div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@3.0.0/dist/browser/signalr.min.js"></script>  
+  <script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
+
+  <script>
+    const data = {
+      ready: false
+    }
+
+    const apiBaseUrl = ''
+
+	var iMenuCount = 0;
+
+	$('a').each(function(index, value){
+		iMenuCount++;
+	});
+
+	var iItemCount = 0;
+
+	$('li').each(function(index, value){
+		iItemCount++;
+	});
+	
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl(`${apiBaseUrl}/signalr`)
+      .withAutomaticReconnect()
+      .configureLogging(signalR.LogLevel.Information)
+      .build()
+
+    connection.on('newMessage', newMessage)
+
+
+    /*let counter = 0
+    function newMessage(message) {
+      message.id = counter++ // vue transitions need an id
+      data.messages.unshift(message)
+    }*/
+
+    connection.start()
+      .then(() => data.ready = true)
+      .catch(console.error)
+
+	function newMessage(message) { //alert(JSON.stringify(message));
+		var iPosition = $('#current').html();
+		var iPositionLeft = $('#leftcurrent').html();
+		var iPositionRight = $('#rightcurrent').html();
+		setPosition(message.text, iPosition, iPositionLeft, iPositionRight);
+	}
+
+	function setPosition(iGesture, iPosition, iPositionLeft, iPositionRight) { //alert(iGesture +"--"+ iPosition +"--"+ iPositionLeft +"--"+ iPositionRight);
+		var bLeft = false;
+		var bRight = false;
+		var bUp = false;
+		var bDown = false;
+		var bBack = false;
+		var bClick = false;
+		var iCurrent = parseInt(iPosition);
+		var iCurrentLeft = parseInt(iPositionLeft);
+		var iCurrentRight = parseInt(iPositionRight);
+		
+		if (iGesture == "left") {
+			bLeft = true;
+		} else if (iGesture == "right") {
+			bRight = true;
+		} else if (iGesture == "up") {
+			bUp = true;
+		} else if (iGesture == "down") {
+			bDown = true;
+		} else if (iGesture == "back") {
+			bBack = true;
+		} else if (iGesture == "click") {
+			bClick = true;
+		}
+		
+		if (iCurrent == 0) {
+			if (bRight == true) {
+				var iPos = 0;
+				navigateMenuSwitch(iCurrent, iPos, iCurrentLeft);
+			} else if (bUp == true && ((iCurrentLeft - 1) > 0)) {
+				var iPos = iCurrentLeft - 1;
+				navigateMenuLeft(iPos, iCurrentLeft, 0);
+			} else if (bDown == true && (iCurrentLeft < (iMenuCount-1))) {
+				var iPos = iCurrentLeft + 1;
+				navigateMenuLeft(iPos, iCurrentLeft, 1);
+			} else if (bBack == true) {
+				window.history.back();
+			} else if (bClick == true) {
+				var iPos = iCurrent;
+				var cHref = $('#nav'+ iPos).attr("href");
+				window.location.href = cHref;
+			}
+		} else if (iCurrent == 1) {
+			if (bLeft == true && iCurrentRight > 0) { 
+				var iPos = iCurrentRight-1;
+				navigateMenuRight(iPos, iCurrentRight, 0);
+			} else if (bLeft == true && iCurrentRight == 0) {
+				var iPos = iCurrentLeft;
+				navigateMenuSwitch(iCurrent, iPos, 0);
+			}
+			
+			if (bRight == true && iCurrentRight < (iItemCount-1)) {
+				var iPos = iCurrentRight+1;
+				navigateMenuRight(iPos, iCurrentRight, 1);
+			} else if (bBack == true) {
+				window.history.back();
+			} else if (bClick == true) {
+				var iPos = iCurrent;
+				var cHref = "menu.html";
+				window.location.href = cHref;
+			}
+		}
+		
+	}
+
+	function navigateMenuSwitch(iCurrent, iPos, iCurrentLeft) {
+		if (iCurrent == 0) {
+			$('#nav' + iCurrentLeft).removeClass("sidenav-current").addClass("sidenav-disable");
+			$('#middle0').attr("style", "width: 100px; float:left; height:100px; background:gray; margin:10px; border-style: double;");
+			$('#current').html("1");
+		} else if (iCurrent == 1) {
+			$('#middle0').attr("style", "width: 100px; float:left; height:100px; background:gray; margin:10px; border-style: none;");
+			$('#nav' + iPos).removeClass("sidenav-disable").addClass("sidenav-current");
+			$('#current').html("0");
+		}
+	}
+
+	function navigateMenuLeft(iPosition, iCurrent, iDirection) {
+		$('#nav' + iCurrent).removeClass("sidenav-current").addClass("sidenav-other");
+		$('#nav' + iPosition).removeClass("sidenav-other").addClass("sidenav-current");
+		$('#current').html("0");
+		$('#leftcurrent').html(iPosition);
+	}
+
+	function navigateMenuRight(iPosition, iCurrent, iDirection) {
+		if (iDirection == 0) {
+			if (iPosition < 1) {
+				cCurrent = "yellow";
+				cNext = "gray";
+			} else if (iPosition == 1) {
+				cCurrent = "red";
+				cNext = "yellow";
+			}
+		} else {
+			if (iPosition < 2) {
+				cCurrent = "gray";
+				cNext = "yellow";
+			} else {
+				cCurrent = "yellow";
+				cNext = "red";		
+			}
+		}
+		$('#middle' + iCurrent).attr("style", "width: 100px; float:left; height:100px; background:"+ cCurrent +"; margin:10px; border-style: none;");
+		$('#middle' + iPosition).attr("style", "width: 100px; float:left; height:100px; background:"+ cNext +"; margin:10px; border-style: double;");
+		$('#current').html("1");
+		$('#rightcurrent').html(iPosition);
+	}
+  </script>
+</body>
+
+</html>

@@ -8,6 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,13 +28,14 @@ import kong.unirest.Unirest;
  */
 @RestController
 @RequestMapping("/apiInteractiveRetailStore/v1")
+@CrossOrigin(origins = { "*" })
 public class SignalRController {
 	private static final Logger LOG = LoggerFactory.getLogger(SignalRController.class);
     private String signalRServiceKey = "7CBr5mnYzhKv/PWLjBL575bCgWf1+ykrTZRuUCKS//A=";
-    // https://foo.service.signalr.net
     private String signalRServiceBaseEndpoint = "https://signalr-is.service.signalr.net";
     private String hubName = "chat";
 
+ 
     @PostMapping("/signalr/negotiate")
     public SignalRConnectionInfo negotiate() {
     	LOG.info("SignalRController : negotiate - Start");

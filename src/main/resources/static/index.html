@@ -76,10 +76,11 @@
       }
     })
 
-    const apiBaseUrl = ''
+    const apiBaseUrl = '/apiInteractiveRetailStore/v1'
 
     const connection = new signalR.HubConnectionBuilder()
-      .withUrl(`${apiBaseUrl}/signalr`)
+     /*  .withUrl(`${apiBaseUrl}/signalr`) */
+     .withUrl(apiBaseUrl+'/signalr') 
       .withAutomaticReconnect()
       .configureLogging(signalR.LogLevel.Information)
       .build()
@@ -91,7 +92,8 @@
       .catch(console.error)
 
     function sendMessage(sender, messageText) {
-      return axios.post(`${apiBaseUrl}/api/messages`, {
+    /*   return axios.post(`${apiBaseUrl}/api/messages`, { */
+    	return axios.post(apiBaseUrl+'/api/messages', {
         sender: sender,
         text: messageText
       }).then(resp => resp.data)
