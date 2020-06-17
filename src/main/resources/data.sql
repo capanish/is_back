@@ -9,18 +9,27 @@ INSERT INTO MENU(MENU_NAME,ACTIVE,IMAGE,NOTIFICATION)
       
  INSERT INTO SUB_MENU(SUB_MENU_NAME,FK_MENU_ID,ACTIVE,IMAGE,NOTIFICATION)
   VALUES
-      ('Banana',3,'Y','assets/images/bananas.jpg',0),
+      ('Banana',3,'Y','assets/images/bananas_new.jpg',0),
       ('Apple',3,'Y','assets/images/apples.jpg',0),
-      ('Pear',3,'Y','assets/images/pears.jpg',0),
-      ('Peas',3,'Y','assets/images/kiwis.jpg',0),
-      ('Cabbage',3,'Y','assets/images/blackberries.jpg',0),    
-      ('Tomato',3,'Y','assets/images/oranges.jpg',0),
-      ('Capsicum',3,'Y','assets/images/pineapples.jpg',0),
-      ('Potato',3,'Y','assets/images/peaches.jpg',0),
-      ('Onions',3,'Y','assets/images/strawberries.jpg',0),
-      ('Cherry',3,'Y','assets/images/strawberries.jpg',0),
-      ('Lemon',3,'Y','assets/images/strawberries.jpg',0),
-      ('Oranges',3,'Y','assets/images/strawberries.jpg',0);
+      ('Pear',3,'Y','assets/images/pears_new.jpg',0),
+      ('Peas',3,'Y','assets/images/peas.jpg',0),
+      ('Cabbage',3,'Y','assets/images/cabbage.jpg',0),    
+      ('Tomato',3,'Y','assets/images/tomatoes.jpeg',0),
+      ('Capsicum',3,'Y','assets/images/capsicum.jpeg',0),
+      ('Potato',3,'Y','assets/images/potatoes.jpeg',0),
+      ('Onions',3,'Y','assets/images/onions.jpeg',0),
+      ('Cherry',3,'Y','assets/images/cherries.jpeg',0),
+      ('Lemon',3,'Y','assets/images/lemon.jpeg',0),
+      ('Oranges',3,'Y','assets/images/oranges.jpeg',0),
+      
+      ('Bacon',4,'Y','assets/images/bacon.jpg',0),
+      ('Ham',4,'Y','assets/images/cooked_ham.jpg',0),
+      ('Jamon',4,'Y','assets/images/jamon.jpg',0),
+      ('Sausage',4,'Y','assets/images/sausage.jpg',0),    
+      ('Salami',4,'Y','assets/images/salami.jpg',0),
+      ('Morcilla',4,'Y','assets/images/morcilla.jpg',0),
+      ('Fuet',4,'Y','assets/images/fuet.jpg',0),
+      ('Butifarra',4,'Y','assets/images/butifarra.jpg',0);
   /*    
  INSERT INTO INFORMATION(FK_SUB_MENU_ID,PROCURE_DATE,SUGAR,PROTEIN,WATER,SODIUM,
  CALCIUM,IRON,ITEM_DESCRIPTION,LOCATION,ACTIVE,IMAGE)
