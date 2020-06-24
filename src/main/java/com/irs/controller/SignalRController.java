@@ -28,7 +28,7 @@ import kong.unirest.Unirest;
  */
 @RestController
 @RequestMapping("/apiInteractiveRetailStore/v1")
-@CrossOrigin(origins = { "*" })
+@CrossOrigin(origins = {"*"})
 public class SignalRController {
 	private static final Logger LOG = LoggerFactory.getLogger(SignalRController.class);
     private String signalRServiceKey = "7CBr5mnYzhKv/PWLjBL575bCgWf1+ykrTZRuUCKS//A=";

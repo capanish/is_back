@@ -30,20 +30,7 @@ INSERT INTO MENU(MENU_NAME,ACTIVE,IMAGE,NOTIFICATION)
       ('Morcilla',4,'Y','assets/images/morcilla.jpg',0),
       ('Fuet',4,'Y','assets/images/fuet.jpg',0),
       ('Butifarra',4,'Y','assets/images/butifarra.jpg',0);
-  /*    
- INSERT INTO INFORMATION(FK_SUB_MENU_ID,PROCURE_DATE,SUGAR,PROTEIN,WATER,SODIUM,
- CALCIUM,IRON,ITEM_DESCRIPTION,LOCATION,ACTIVE,IMAGE)
-  VALUES
-      (1,curdate(),10,10,10,10,10,10,'Bananas are good','Bengaluru','y','assets/images/bananas.jpg'),
-	  (2,curdate(),10,10,10,10,10,10,'Tomatoes are good','Bengaluru','y','assets/images/bananas.jpg'),
-	  (3,NOW(),10,10,10,10,10,10,'Bananas are good','Bengaluru','y','assets/images/bananas.jpg'),
-	  (4,NOW(),10,10,10,10,10,10,'Tomatoes are good','Bengaluru','y','assets/images/bananas.jpg'),
-	  (5,NOW(),10,10,10,10,10,10,'Bananas are good','Bengaluru','y','assets/images/bananas.jpg'),
-	  (6,NOW(),10,10,10,10,10,10,'Tomatoes are good','Bengaluru','y','assets/images/bananas.jpg'),
-	  (7,NOW(),10,10,10,10,10,10,'Bananas are good','Bengaluru','y','assets/images/bananas.jpg'),
-	  (8,NOW(),10,10,10,10,10,10,'Tomatoes are good','Bengaluru','y','assets/images/bananas.jpg'),
-	  (9,NOW(),10,10,10,10,10,10,'Bananas are good','Bengaluru','y','assets/images/bananas.jpg');
-*/
+
        INSERT INTO INFORMATION(FK_SUB_MENU_ID,IMAGE)
   VALUES
       (1,'assets/images/nutriInfo_banana.jpg'),
