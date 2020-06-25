@@ -1,0 +1,185 @@
+<html>
+
+<head>
+  <title>Interactive Screens - Grid</title>
+  <link rel="stylesheet" href="css/main.css"></head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+<div style="display: none">
+	<div id="colnum">3</div>
+	<div id="current">0</div>
+</div>
+<ul id="rig">
+    <li>
+        <a class="rig-cell" id="anchor0" href="info.html">
+            <img id="img0" class="rig-img rig-img-hover" src="images/4.jpeg">
+            <span id="overlay0" class="rig-overlay rig-overlay-hover"></span>
+            <span id="text0" class="rig-text rig-text-hover">Orange</span>
+        </a>
+    </li>
+    <li>
+        <a class="rig-cell" id="anchor1" href="info.html">
+            <img id="img1" class="rig-img" src="images/1.jpg">
+            <span id="overlay1" class="rig-overlay"></span>
+            <span id="text1" class="rig-text">Cabbage</span>
+        </a>
+    </li>
+    <li>
+        <a class="rig-cell" id="anchor2" href="info.html">
+            <img id="img2" class="rig-img" src="images/2.jpg">
+            <span id="overlay2" class="rig-overlay"></span>
+            <span id="text2" class="rig-text">Peas</span>
+        </a>
+    </li>
+    <li>
+        <a class="rig-cell" id="anchor3" href="info.html">
+            <img id="img3" class="rig-img" src="images/3.jpg">
+            <span id="overlay3" class="rig-overlay"></span>
+            <span id="text3" class="rig-text">Pears</span>
+        </a>
+    </li>
+    <li>
+        <a class="rig-cell" id="anchor4" href="info.html">
+            <img id="img4" class="rig-img" src="images/5.jpeg">
+            <span id="overlay4" class="rig-overlay"></span>
+            <span id="text4" class="rig-text">Capsicum</span>
+        </a>
+    </li>
+    <li>
+        <a class="rig-cell" id="anchor5" href="info.html">
+            <img id="img5" class="rig-img" src="images/6.jpeg">
+            <span id="overlay5" class="rig-overlay"></span>
+            <span id="text5" class="rig-text">Lemon</span>
+        </a>
+    </li>
+    <li>
+        <a class="rig-cell" id="anchor6" href="info.html">
+            <img id="img6" class="rig-img" src="images/7.jpeg">
+            <span id="overlay6" class="rig-overlay"></span>
+            <span id="text6" class="rig-text">Potato</span>
+        </a>
+    </li>
+    <li>
+        <a class="rig-cell" id="anchor7" href="info.html">
+            <img id="img7" class="rig-img" src="images/8.jpeg">
+            <span id="overlay7" class="rig-overlay"></span>
+            <span id="text7" class="rig-text">Tomato</span>
+        </a>
+    </li>
+    <li>
+        <a class="rig-cell" id="anchor8" href="info.html">
+            <img id="img8" class="rig-img" src="images/9.jpeg">
+            <span id="overlay8" class="rig-overlay"></span>
+            <span id="text8" class="rig-text">Cherry</span>
+        </a>
+    </li>
+</ul>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@3.0.0/dist/browser/signalr.min.js"></script>  
+  <script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
+
+  <script>
+    const data = {
+      ready: false
+    }
+
+    const apiBaseUrl = ''
+
+	var iMenuCount = 0;
+	var iColCount = parseInt($('#colnum').html());
+
+	$('a').each(function(index, value){
+		iMenuCount++;
+	});
+
+	var iRowCount = parseInt(iMenuCount / iColCount);
+	
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl(`${apiBaseUrl}/signalr`)
+      .withAutomaticReconnect()
+      .configureLogging(signalR.LogLevel.Information)
+      .build()
+
+    connection.on('newMessage', newMessage)
+
+
+    /*let counter = 0
+    function newMessage(message) {
+      message.id = counter++ // vue transitions need an id
+      data.messages.unshift(message)
+    }*/
+
+    connection.start()
+      .then(() => data.ready = true)
+      .catch(console.error)
+
+	function newMessage(message) { //alert(JSON.stringify(message));
+		var iPosition = $('#current').html();
+		
+		setPosition(message.text, iMenuCount, iPosition);
+	}
+
+	function setPosition(iGesture, iMenuCount, iPosition) {
+		var bLeft = false;
+		var bRight = false;
+		var bUp = false;
+		var bDown = false;
+		var bBack = false;
+		var bClick = false;
+		var iCurrent = parseInt(iPosition);
+		
+		if (iGesture == "left") {
+			bLeft = true;
+		} else if (iGesture == "right") {
+			bRight = true;
+		} else if (iGesture == "up") {
+			bUp = true;
+		} else if (iGesture == "down") {
+			bDown = true;
+		} else if (iGesture == "back") {
+			bBack = true;
+		} else if (iGesture == "click") {
+			bClick = true;
+		}
+		
+		if (bLeft == true && iPosition > 0) {
+			var iPos = iCurrent-1;
+			if ((iPos % iColCount) < (iRowCount - 1)) {
+				navigateMenu(iPos, iPosition);
+			}
+		} else if (bRight == true && iPosition < (iMenuCount-1)) {
+			var iPos = iCurrent+1;
+			if ((iPos % iColCount) > 0) {
+				navigateMenu(iPos, iPosition);
+			}
+		} else if (bUp == true && ((iPosition / iColCount) > 1)) {
+			var iPos = iCurrent - iColCount;
+			navigateMenu(iPos, iPosition);
+		} else if (bDown == true && ((iPosition / iColCount) < (iRowCount - 1))) {
+			var iPos = iCurrent + iColCount;
+			navigateMenu(iPos, iPosition);
+		} else if (bBack == true) {
+			window.history.back();
+		} else if (bClick == true) {
+			var iPos = iCurrent;
+			var cHref = $('#anchor'+ iPos).attr("href");
+			window.location.href = cHref;
+		}
+	}
+
+	function navigateMenu(iPosition, iCurrent) {
+		$('#img' + iCurrent).removeClass("rig-img-hover");
+		$('#img' + iPosition).addClass("rig-img-hover");
+		$('#overlay' + iCurrent).removeClass("rig-overlay-hover");
+		$('#overlay' + iPosition).addClass("rig-overlay-hover");
+		$('#text' + iCurrent).removeClass("rig-text-hover");
+		$('#text' + iPosition).addClass("rig-text-hover");
+		$('#current').html(iPosition);
+	}
+  </script>
+</body>
+
+</html>

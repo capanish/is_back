@@ -31,15 +31,18 @@ INSERT INTO MENU(MENU_NAME,ACTIVE,IMAGE,NOTIFICATION)
       ('Fuet',4,'Y','assets/images/fuet.jpg',0),
       ('Butifarra',4,'Y','assets/images/butifarra.jpg',0);
 
-       INSERT INTO INFORMATION(FK_SUB_MENU_ID,IMAGE)
+       INSERT INTO INFORMATION(NAME,FK_SUB_MENU_ID,IMAGE)
   VALUES
-      (1,'assets/images/nutriInfo_banana.jpg'),
-	  (2,'assets/images/nutriInfo_Tomato.jpg'),
-	  (3,'assets/images/nutriInfo_banana.jpg'),
-	  (4,'assets/images/nutriInfo_banana.jpg'),
-	  (5,'assets/images/nutriInfo_banana.jpg'),
-	  (6,'assets/images/nutriInfo_banana.jpg'),
-	  (7,'assets/images/nutriInfo_banana.jpg'),
-	  (8,'assets/images/nutriInfo_banana.jpg'),
-	  (9,'assets/images/nutriInfo_banana.jpg');
+      ('Banana',1,'assets/images/nutriInfo_banana.jpg'),
+	  ('Apple' ,2,'assets/images/nutriInfo_Tomato.jpg'),
+	  ('Pear',3,'assets/images/nutriInfo_banana.jpg'),
+	  ('Peas',4,'assets/images/nutriInfo_banana.jpg'),
+	  ('Cabbage',5,'assets/images/nutriInfo_banana.jpg'),
+	  ('Tomato',6,'assets/images/nutriInfo_banana.jpg'),
+	  ('Capsicum',7,'assets/images/nutriInfo_banana.jpg'),
+	  ('Potato',8,'assets/images/nutriInfo_banana.jpg'),
+	  ('Onions',9,'assets/images/nutriInfo_banana.jpg'),
+	  ('Cherry',10,'assets/images/nutriInfo_banana.jpg'),
+	  ('Lemon',11,'assets/images/nutriInfo_banana.jpg'),
+	  ('Oranges',12,'assets/images/nutriInfo_banana.jpg');
 commit;

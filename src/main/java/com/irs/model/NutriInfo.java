@@ -25,7 +25,9 @@ public class NutriInfo implements Serializable{
     @OneToOne
     @JoinColumn(name = "FK_SUB_MENU_ID", referencedColumnName = "SUB_MENU_ID")
     private CategoryList subMenuID;
-  
+    
+    @Column(length = 100)
+    private String name;
    
     @Column(length = 1000)
     private String image;
@@ -59,6 +61,22 @@ public class NutriInfo implements Serializable{
 	public void setSubMenuID(CategoryList subMenuID) {
 		this.subMenuID = subMenuID;
 	}
+	
+	/**
+	 * Get name
+	 * 
+	 * @return name
+	 **/
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param name new value of {@link getName}
+	 **/
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 
 	/**
 	 * Get image
