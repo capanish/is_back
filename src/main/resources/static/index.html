@@ -24,33 +24,39 @@
   <div id="app" class="container">
     <div class="row" v-if="ready">
       <div class="signalr-demo col-sm">
-        <hr />
-        <form v-on:submit.prevent="sendNewMessage">
-          <input type="text" v-model="newMessage" id="message-box" class="form-control" placeholder="Type gesture here left / right / up / down / back / click..." autocomplete="off" />
-        </form>
+		<div id="example-2">
+			<table align="center" width="50%">
+				<tr>
+					<td>
+						<table width="98%" align="center">
+							<tr>
+								<td colspan="2" align="center"><button v-on:click="func_up">Up</button></td>
+							<tr>
+							<tr>
+								<td align="center"><button v-on:click="func_left">Left</button></td>
+								<td align="center"><button v-on:click="func_right">Right</button></td>
+							</tr>
+							<tr>
+								<td colspan="2" align="center"><button v-on:click="func_down">Down</button></td>
+							<tr>
+							<tr>
+								<td colspan="2" align="center">&nbsp;</td>
+							<tr>
+							<tr>
+								<td align="center"><button v-on:click="func_home">Home</button></td>
+								<td align="center"><button v-on:click="func_click">Click</button></td>
+							</tr>
+							<tr>
+								<td align="center"><button v-on:click="func_back">Back</button></td>
+								<td align="center"><button v-on:click="func_carousel">Carousel</button></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>		
       </div>
     </div>
-    <div class="row" v-if="!ready">
-      <div class="col-sm">
-        <div>Loading...</div>
-      </div>
-    </div>
-    <div v-if="ready">
-      <transition-group name="slide-fade" tag="div">
-        <div class="row" v-for="message in messages" v-bind:key="message.id">
-          <div class="col-sm">
-            <hr />
-            <div>
-              <div style="display: inline-block; padding-left: 12px;">
-                <div>
-                  {{ message.text }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </transition-group>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
@@ -69,9 +75,29 @@
       el: '#app',
       data: data,
       methods: {
-        sendNewMessage: function () {
-          sendMessage(this.username, this.newMessage)
-          this.newMessage = ''
+        func_up: function () {
+          sendMessage(this.username, 'up')
+        },
+        func_down: function () {
+          sendMessage(this.username, 'down')
+        },
+        func_left: function () {
+          sendMessage(this.username, 'left')
+        },
+        func_right: function () {
+          sendMessage(this.username, 'right')
+        },
+        func_back: function () {
+          sendMessage(this.username, 'back')
+        },
+        func_click: function () {
+          sendMessage(this.username, 'click')
+        },
+        func_home: function () {
+          sendMessage(this.username, 'home')
+        },
+        func_carousel: function () {
+          sendMessage(this.username, 'carousel')
         }
       }
     })
